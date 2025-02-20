@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="false" userDefinedModelVersionIdentifier="">
-    <entity name="Item" representedClassName="Item" syncable="YES" codeGenerationType="class">
-        <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="23605" systemVersion="24D70" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
+    <entity name="Fisherman" representedClassName="Fisherman" syncable="YES" codeGenerationType="class">
+        <attribute name="fullName" optional="YES" attributeType="String"/>
+        <attribute name="hooks" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="isSoundEnable" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="mastery" optional="YES" attributeType="String"/>
     </entity>
-    <elements>
-        <element name="Item" positionX="-63" positionY="-18" width="128" height="44"/>
-    </elements>
+    <entity name="FishingRods" representedClassName="FishingRods" syncable="YES" codeGenerationType="class">
+        <attribute name="fishingRodCharacteristics" optional="YES" attributeType="String"/>
+        <attribute name="fishingRodImage" optional="YES" attributeType="String"/>
+        <attribute name="fishingRodName" optional="YES" attributeType="String"/>
+        <attribute name="isFishingRodBuyed" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+    </entity>
 </model>

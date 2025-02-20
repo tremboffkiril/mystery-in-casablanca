@@ -1,19 +1,12 @@
-//
-//  mystery_in_casablancaApp.swift
-//  mystery-in-casablanca
-//
-//  Created by Kiril Trembovetskyi on 15.01.2025.
-//
-
 import SwiftUI
 
 @main
-struct mystery_in_casablancaApp: App {
+struct bass_time_guideApp: App {
     let persistenceController = PersistenceController.shared
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            StartView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }
