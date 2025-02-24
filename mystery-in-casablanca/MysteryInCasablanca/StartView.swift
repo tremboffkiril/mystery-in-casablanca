@@ -1,10 +1,10 @@
 import SwiftUI
 
 struct StartView: View {
-    @State private var presentBass = false
+    @State private var presentMysteryInCasablanca = false
     @State private var presentCreateAccount = false
     
-    @FetchRequest(sortDescriptors: []) var fishermen: FetchedResults<Fisherman>
+    @FetchRequest(sortDescriptors: []) var mystery: FetchedResults<Mystery>
     let loadTimer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     @State var loadTimeSeconds = 4
     
@@ -13,21 +13,22 @@ struct StartView: View {
             bgColor.edgesIgnoringSafeArea(.all)
             VStack {
                 Text("Mystery in Casablanca")
-                    .font(BassFont.regular.font(with: 34))
+                    .font(MysteryInCasablancaFont.regular.font(with: 34))
                     .foregroundColor(textColor)
+                    .padding(.bottom, 30)
                 
                 ActivityIndicatorView()
                     .frame(width: 70, height: 70)
-                    .foregroundColor(actionColor)
+                    .foregroundColor(textColor)
             }
         }
         .fullScreenCover(isPresented: $presentCreateAccount) {
-            CreateBassView()
+            CreateMysteryInCasablancaView()
         }
-        .fullScreenCover(isPresented: $presentBass) {
+        .fullScreenCover(isPresented: $presentMysteryInCasablanca) {
             MysteryInCasablancaTabBarView()
                 .onAppear {
-                    BassMusicService.shared.updatePlayer(setOn: (fishermen.first?.isSoundEnable ?? true))
+                    MysteryInCasablancaMusicService.shared.updatePlayer(setOn: (mystery.first?.isSoundEnable ?? true))
                 }
         }
         .onReceive(loadTimer) { _ in
@@ -35,11 +36,11 @@ struct StartView: View {
                 loadTimeSeconds -= 1
             } else if loadTimeSeconds == .zero {
                 loadTimer.upstream.connect().cancel()
-                guard !fishermen.isEmpty else {
+                guard !mystery.isEmpty else {
                     presentCreateAccount = true
                     return
                 }
-                presentBass = true
+                presentMysteryInCasablanca = true
             }
         }
     }

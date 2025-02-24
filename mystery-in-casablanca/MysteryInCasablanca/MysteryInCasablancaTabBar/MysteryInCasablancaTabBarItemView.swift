@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct MysteryInCasablancaTabBarItemView: View {
-    @State var mysteryInCasablancaTab: BassTab
+    @State var mysteryInCasablancaTab: MysteryInCasablancaTab
     @Binding var mysteryInCasablancaSelected: String
     var body: some View {
         ZStack {
@@ -16,7 +16,7 @@ struct MysteryInCasablancaTabBarItemView: View {
                         .frame(width: 24, height: 24)
                     Text(mysteryInCasablancaTab.mysteryInCasablancaTabName)
                         .font(.system(size: 13, weight: .medium))
-                        .foregroundColor(mysteryInCasablancaSelected == mysteryInCasablancaTab.mysteryInCasablancaTabTag ? actionColor : .gray)
+                        .foregroundColor(mysteryInCasablancaSelected == mysteryInCasablancaTab.mysteryInCasablancaTabTag ? textColor : actionColor)
                 }
             }
         }

@@ -1,7 +1,7 @@
 import SwiftUI
 
 @main
-struct bass_time_guideApp: App {
+struct mystery_in_casablancaApp: App {
     let persistenceController = PersistenceController.shared
 
     var body: some Scene {

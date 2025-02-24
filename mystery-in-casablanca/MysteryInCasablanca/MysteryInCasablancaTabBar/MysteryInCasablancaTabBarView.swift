@@ -11,11 +11,11 @@ struct MysteryInCasablancaTabBarView: View {
             TabView(selection: $mysteryInCasablancaSelectedTab) {
                 MenuView()
                     .tag("1")
-                FishingRodsView()
+                MysteryInCasablancaRecordsView()
                     .tag("2")
-                BassRecordsView()
+                StickView()
                     .tag("3")
-                BassProfileView()
+                MysteryInCasablancaProfileView()
                     .tag("4")
             }
             

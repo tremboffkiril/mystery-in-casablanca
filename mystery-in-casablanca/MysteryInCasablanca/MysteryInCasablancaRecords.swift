@@ -1,20 +1,19 @@
 import SwiftUI
 
-struct BassRecordsView: View {
+struct MysteryInCasablancaRecordsView: View {
     var body: some View {
         ZStack {
             bgColor.edgesIgnoringSafeArea(.all)
             VStack {
                 HStack {
                     Text("Records")
-                        .font(BassFont.regular.font(with: 34))
+                        .font(MysteryInCasablancaFont.regular.font(with: 34))
                         .foregroundColor(textColor)
-                    Spacer()
                 }
                 
                 List {
                     ForEach(mysteryInCasablancaRecords, id: \.self) { mysteryInCasablancaRecord in
-                        BassButtonStack(buttonText: mysteryInCasablancaRecord)
+                        MysteryInCasablancaButtonStack(buttonText: mysteryInCasablancaRecord)
                             .listRowBackground(Color.clear)
                     }
                 }
@@ -28,5 +27,5 @@ struct BassRecordsView: View {
 }
 
 #Preview {
-    BassRecordsView()
+    MysteryInCasablancaRecordsView()
 }

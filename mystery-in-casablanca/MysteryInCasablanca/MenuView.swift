@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct MenuView: View {
-    @FetchRequest(sortDescriptors: []) var fishermen: FetchedResults<Fisherman>
+    @FetchRequest(sortDescriptors: []) var mystery: FetchedResults<Mystery>
     @State var presentPlay = false
     var body: some View {
         NavigationView {
@@ -10,12 +10,11 @@ struct MenuView: View {
                 VStack {
                     HStack {
                         Text("Mystery in Casablanca")
-                            .font(BassFont.regular.font(with: 34))
+                            .font(MysteryInCasablancaFont.regular.font(with: 34))
                             .foregroundColor(textColor)
-                        Spacer()
                     }
                     
-                    Image(fishermen.first?.mastery ?? "easy")
+                    Image(mystery.first?.level ?? "easy")
                         .resizable()
                         .frame(width: 250, height: 250)
                         .cornerRadius(10)
@@ -25,15 +24,15 @@ struct MenuView: View {
                             Button {
                                 presentPlay = true
                             } label: {
-                                BassButtonStack(buttonText: BassMenu.letsFish.rawValue)
+                                MysteryInCasablancaButtonStack(buttonText: MysteryInCasablancaMenu.go.rawValue)
                             }
-                            NavigationLink(destination: ChooseMasteryView(isCreate: false)) {
-                                BassButtonStack(buttonText: BassMenu.yourMastery.rawValue)
+                            NavigationLink(destination: ChooseLevelView(isCreate: false)) {
+                                MysteryInCasablancaButtonStack(buttonText: MysteryInCasablancaMenu.yourLevel.rawValue)
                             }
                             Button {
-                                BassRateService().rateBass()
+                                MysteryInCasablancaRateService().rateMysteryInCasablanca()
                             } label: {
-                                BassButtonStack(buttonText: BassMenu.rateUs.rawValue)
+                                MysteryInCasablancaButtonStack(buttonText: MysteryInCasablancaMenu.rateUs.rawValue)
                             }
                         }
                     }
@@ -50,10 +49,10 @@ struct MenuView: View {
 }
 
 struct MenuItex: View {
-    @State var mysteryInCasablancaMenuType: BassMenu
+    @State var mysteryInCasablancaMenuType: MysteryInCasablancaMenu
     var body: some View {
         NavigationLink("") {
-            BassButtonStack(buttonText: mysteryInCasablancaMenuType.rawValue)
+            MysteryInCasablancaButtonStack(buttonText: mysteryInCasablancaMenuType.rawValue)
         }
     }
 }

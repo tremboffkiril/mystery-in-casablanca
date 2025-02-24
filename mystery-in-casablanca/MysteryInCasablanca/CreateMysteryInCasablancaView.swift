@@ -1,7 +1,7 @@
 import SwiftUI
 
-struct CreateBassView: View {
-    @FetchRequest(sortDescriptors: []) var fishermen: FetchedResults<Fisherman>
+struct CreateMysteryInCasablancaView: View {
+    @FetchRequest(sortDescriptors: []) var mystery: FetchedResults<Mystery>
     @Environment(\.managedObjectContext) var viewContext
     @State var mysteryInCasablancaFullName: String = String()
     @State private var presentAlert = false
@@ -13,27 +13,26 @@ struct CreateBassView: View {
                 bgColor.edgesIgnoringSafeArea(.all)
                 VStack {
                     HStack {
-                        Text("Create your Bass")
-                            .font(BassFont.regular.font(with: 34))
+                        Text("Create your Mystery")
+                            .font(MysteryInCasablancaFont.regular.font(with: 34))
                             .foregroundColor(textColor)
-                        Spacer()
                     }
                     
                     Spacer()
-                    BassTexFieldStack(placeholderText: "Full name",
+                    MysteryInCasablancaTexFieldStack(placeholderText: "Full name",
                                       input: $mysteryInCasablancaFullName)
                     
                     Spacer()
-                    NavigationLink(destination: ChooseMasteryView()) {
-                        BassButtonStack(buttonText: "Create Bass")
+                    NavigationLink(destination: ChooseLevelView()) {
+                        MysteryInCasablancaButtonStack(buttonText: "Create Mystery")
                     }.simultaneousGesture(TapGesture().onEnded {
-                        createBass(isGuest: false)
+                        createMysteryInCasablanca(isGuest: false)
                     })
                     
                     Button {
-                        createBass(isGuest: true)
+                        createMysteryInCasablanca(isGuest: true)
                     } label: {
-                        BassButtonStack(buttonText: "Close creating")
+                        MysteryInCasablancaButtonStack(buttonText: "Close creating")
                     }
                 }
                 .padding()
@@ -42,7 +41,7 @@ struct CreateBassView: View {
         .fullScreenCover(isPresented: $presentMysteryInCasablanca) {
             MysteryInCasablancaTabBarView()
                 .onAppear {
-                    BassMusicService.shared.updatePlayer(setOn: (fishermen.first?.isSoundEnable ?? true))
+                    MysteryInCasablancaMusicService.shared.updatePlayer(setOn: (mystery.first?.isSoundEnable ?? true))
                 }
         }
         .alert("Enter full name for continue", isPresented: $presentAlert) {
@@ -51,41 +50,41 @@ struct CreateBassView: View {
     }
 }
 
-extension CreateBassView {
-    func createBass(isGuest: Bool) {
+extension CreateMysteryInCasablancaView {
+    func createMysteryInCasablanca(isGuest: Bool) {
         withAnimation {
             if !isGuest {
                 if mysteryInCasablancaFullName.isEmpty {
                     presentAlert.toggle()
                 } else {
-                    let fisherman = Fisherman(context: viewContext)
-                    fisherman.isSoundEnable = true
-                    fisherman.hooks = 20
-                    fisherman.fullName = mysteryInCasablancaFullName
+                    let mystery = Mystery(context: viewContext)
+                    mystery.isSoundEnable = true
+                    mystery.hooks = 20
+                    mystery.fullName = mysteryInCasablancaFullName
                     
-                    for fishingRodItem in fishingRods {
-                        let fishingRod = FishingRods(context: viewContext)
-                        fishingRod.fishingRodName = fishingRodItem.name
-                        fishingRod.fishingRodCharacteristics = fishingRodItem.description
-                        fishingRod.fishingRodImage = fishingRodItem.image.prompt
-                        fishingRod.isFishingRodBuyed = false
+                    for stickItem in stickCollection {
+                        let stick = Stick(context: viewContext)
+                        stick.stickName = stickItem.name
+                        stick.stickCharacteristics = stickItem.description
+                        stick.stickImage = stickItem.image.name
+                        stick.isStickBuyed = false
                     }
                     
                     saveContext(isGuest: isGuest)
                 }
             } else {
-                let fisherman = Fisherman(context: viewContext)
-                fisherman.isSoundEnable = true
-                fisherman.hooks = 20
-                fisherman.fullName = "Guest"
-                fisherman.mastery = "easy"
+                let mystery = Mystery(context: viewContext)
+                mystery.isSoundEnable = true
+                mystery.hooks = 20
+                mystery.fullName = "Guest"
+                mystery.level = "easy"
                 
-                for fishingRodItem in fishingRods {
-                    let fishingRod = FishingRods(context: viewContext)
-                    fishingRod.fishingRodName = fishingRodItem.name
-                    fishingRod.fishingRodCharacteristics = fishingRodItem.description
-                    fishingRod.fishingRodImage = fishingRodItem.image.prompt
-                    fishingRod.isFishingRodBuyed = false
+                for stickItem in stickCollection {
+                    let stick = Stick(context: viewContext)
+                    stick.stickName = stickItem.name
+                    stick.stickCharacteristics = stickItem.description
+                    stick.stickImage = stickItem.image.name
+                    stick.isStickBuyed = false
                 }
                 saveContext(isGuest: isGuest)
             }
@@ -106,5 +105,5 @@ extension CreateBassView {
 }
 
 #Preview {
-    CreateBassView()
+    CreateMysteryInCasablancaView()
 }

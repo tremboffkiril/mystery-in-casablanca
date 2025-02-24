@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct BassAboutView: View {
+struct MysteryInCasablancaAboutView: View {
     @Environment(\.presentationMode) private var present
     var body: some View {
         ZStack {
@@ -8,19 +8,18 @@ struct BassAboutView: View {
             VStack {
                 HStack {
                     Text("About")
-                        .font(BassFont.regular.font(with: 34))
+                        .font(MysteryInCasablancaFont.regular.font(with: 34))
                         .foregroundColor(textColor)
-                    Spacer()
                 }
                 Text(mysteryInCasablancaAbout)
-                    .font(BassFont.bold.font(with: 20))
+                    .font(MysteryInCasablancaFont.bold.font(with: 20))
                     .foregroundColor(.gray)
                     .padding(.top, 15)
                 Spacer()
                 Button {
                     present.wrappedValue.dismiss()
                 } label: {
-                    BassButtonStack(buttonText: "Close")
+                    MysteryInCasablancaButtonStack(buttonText: "Close")
                 }
             }.padding()
         }
@@ -28,5 +27,5 @@ struct BassAboutView: View {
 }
 
 #Preview {
-    BassAboutView()
+    MysteryInCasablancaAboutView()
 }

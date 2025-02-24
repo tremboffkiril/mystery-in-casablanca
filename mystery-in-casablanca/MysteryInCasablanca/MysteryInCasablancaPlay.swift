@@ -3,12 +3,12 @@ import SwiftUI
 
 struct MysteryInCasablancaPlay: View {
     @Environment(\.managedObjectContext) var viewContext
-    @FetchRequest(sortDescriptors: []) var fishermen: FetchedResults<Fisherman>
+    @FetchRequest(sortDescriptors: []) var mystery: FetchedResults<Mystery>
     @Environment(\.presentationMode) private var present
-    @State var fishingQuiz = fishingQuizArray
+    @State var mysteryQuiz = casablancaQuiz
     @State var mysteryInCasablancaIndexQuestion = 0
-    @State var fishingRodsWoned = 0
-    @State var presentBassEndPlay = false
+    @State var sticksWoned = 0
+    @State var presentMysteryInCasablancaEndPlay = false
     
     @State var mysteryInCasablancaTimer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     @State var mysteryInCasablancaDesiredDurationDate: Date = Calendar.current.date(byAdding: .second,
@@ -30,7 +30,7 @@ struct MysteryInCasablancaPlay: View {
             VStack {
                 HStack {
                     Text(mysteryInCasablancaDuration)
-                        .font(BassFont.regular.font(with: 34))
+                        .font(MysteryInCasablancaFont.regular.font(with: 34))
                         .foregroundColor(textColor)
                         .onReceive(mysteryInCasablancaTimer) { _ in
                             var distanceTime = mysteryInCasablancaDesiredDurationDate.timeIntervalSince(Date())
@@ -38,31 +38,31 @@ struct MysteryInCasablancaPlay: View {
                                 distanceTime = .zero
                                 mysteryInCasablancaDuration = "00:00"
                                 mysteryInCasablancaTimer.upstream.connect().cancel()
-                                collectFishingRods()
+                                collectStickItem()
                             }
                             mysteryInCasablancaDuration = MysteryInCasablancaPlay.timeFormatter.string(from: distanceTime) ?? "00:00"
                         }
                     Spacer()
-                    Text("\(mysteryInCasablancaIndexQuestion + 1) / \(fishingQuiz.count)")
-                        .font(BassFont.medium.font(with: 32))
+                    Text("\(mysteryInCasablancaIndexQuestion + 1) / \(mysteryQuiz.count)")
+                        .font(MysteryInCasablancaFont.medium.font(with: 32))
                         .multilineTextAlignment(.center)
                         .foregroundColor(.gray)
                     Spacer()
                     HStack {
-                        Text("\(fishingRodsWoned)")
-                            .font(BassFont.regular.font(with: 34))
+                        Text("\(sticksWoned)")
+                            .font(MysteryInCasablancaFont.regular.font(with: 34))
                             .foregroundColor(textColor)
-                        Image("fishingShop")
+                        Image("stickShop")
                             .resizable()
                             .frame(width: 30, height: 30)
                             .cornerRadius(10)
                     }
                 }
-                Text(fishingQuiz[mysteryInCasablancaIndexQuestion].question)
-                    .font(BassFont.medium.font(with: 20))
+                Text(mysteryQuiz[mysteryInCasablancaIndexQuestion].question)
+                    .font(MysteryInCasablancaFont.medium.font(with: 20))
                     .multilineTextAlignment(.center)
                     .foregroundColor(.gray)
-                Image(fishermen.first?.mastery ?? "easy")
+                Image(mystery.first?.level ?? "easy")
                     .resizable()
                     .frame(width: 150, height: 150)
                     .cornerRadius(10)
@@ -70,11 +70,11 @@ struct MysteryInCasablancaPlay: View {
                 
                 ScrollView(.vertical) {
                     VStack {
-                        ForEach(Array(fishingQuiz[mysteryInCasablancaIndexQuestion].answers.enumerated()), id: \.offset) { index, answer in
+                        ForEach(Array(mysteryQuiz[mysteryInCasablancaIndexQuestion].answers.enumerated()), id: \.offset) { index, answer in
                             Button {
-                                checkBassAnswer(with: index)
+                                checkMysteryInCasablancaAnswer(with: index)
                             } label: {
-                                BassButtonStack(buttonText: answer.text)
+                                MysteryInCasablancaButtonStack(buttonText: answer.text)
                             }
                         }
                     }
@@ -83,53 +83,53 @@ struct MysteryInCasablancaPlay: View {
                 Button {
                     present.wrappedValue.dismiss()
                 } label: {
-                    BassButtonStack(buttonText: "Close")
+                    MysteryInCasablancaButtonStack(buttonText: "Close")
                 }
             }
             .padding()
         }
         .onAppear {
-            if fishermen.first?.mastery == "easy" {
+            if mystery.first?.level == "easy" {
                 mysteryInCasablancaDesiredDurationDate = Calendar.current.date(byAdding: .second,
                                                                 value: 180,
                                                                 to: Date())!
-            } else if fishermen.first?.mastery == "medium" {
+            } else if mystery.first?.level == "medium" {
                 mysteryInCasablancaDesiredDurationDate = Calendar.current.date(byAdding: .second,
                                                                 value: 90,
                                                                 to: Date())!
-            } else if fishermen.first?.mastery == "hard" {
+            } else if mystery.first?.level == "hard" {
                 mysteryInCasablancaDesiredDurationDate = Calendar.current.date(byAdding: .second,
                                                                 value: 60,
                                                                 to: Date())!
             }
         }
-        .fullScreenCover(isPresented: $presentBassEndPlay) {
-            MysteryInCasablancaPlayFinish(fishingRodsWoned: fishingRodsWoned)
+        .fullScreenCover(isPresented: $presentMysteryInCasablancaEndPlay) {
+            MysteryInCasablancaPlayFinish(sticksWoned: sticksWoned)
         }
     }
     
-    func collectFishingRods() {
-        let fishingRods = fishermen.first?.hooks ?? .zero
-        fishermen.first?.hooks = fishingRods + Int16(fishingRodsWoned)
+    func collectStickItem() {
+        let sticks = mystery.first?.hooks ?? .zero
+        mystery.first?.hooks = sticks + Int16(sticksWoned)
         do {
             try viewContext.save()
-            presentBassEndPlay = true
+            presentMysteryInCasablancaEndPlay = true
         } catch {
             let nsError = error as NSError
             fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
         }
     }
     
-    func checkBassAnswer(with index: Int) {
-        if fishingQuiz[mysteryInCasablancaIndexQuestion].answers[index].isCorrect {
-            fishingRodsWoned += 20
-        } else if fishingRodsWoned >= 20 {
-            fishingRodsWoned -= 15
+    func checkMysteryInCasablancaAnswer(with index: Int) {
+        if mysteryQuiz[mysteryInCasablancaIndexQuestion].answers[index].isCorrect {
+            sticksWoned += 20
+        } else if sticksWoned >= 20 {
+            sticksWoned -= 15
         }
-        if mysteryInCasablancaIndexQuestion < fishingQuiz.count - 1 {
+        if mysteryInCasablancaIndexQuestion < mysteryQuiz.count - 1 {
             mysteryInCasablancaIndexQuestion += 1
         } else {
-            collectFishingRods()
+            collectStickItem()
         }
     }
 }
