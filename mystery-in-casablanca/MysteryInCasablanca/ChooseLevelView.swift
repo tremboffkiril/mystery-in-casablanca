@@ -30,7 +30,7 @@ struct ChooseLevelView: View {
                                     Rectangle()
                                         .frame(width: UIScreen.main.bounds.width / 2.1, height: 30)
                                         .foregroundColor(actionColor.opacity(currentLevel == "easy" ? 0.3 : 0))
-                                    Text(" Easy ")
+                                    Text("  Easy  ")
                                         .font(MysteryInCasablancaFont.regular.font(with: 20))
                                         .foregroundColor(goldColor)
                                 }
@@ -48,7 +48,7 @@ struct ChooseLevelView: View {
                                     Rectangle()
                                         .frame(width: UIScreen.main.bounds.width / 2.1, height: 30)
                                         .foregroundColor(actionColor.opacity(currentLevel == "medium" ? 0.3 : 0))
-                                    Text(" Medium ")
+                                    Text("  Medium  ")
                                         .font(MysteryInCasablancaFont.regular.font(with: 20))
                                         .foregroundColor(goldColor)
                                 }
@@ -67,7 +67,7 @@ struct ChooseLevelView: View {
                                     Rectangle()
                                         .frame(width: UIScreen.main.bounds.width / 2.1, height: 30)
                                         .foregroundColor(actionColor.opacity(currentLevel == "hard" ? 0.3 : 0))
-                                    Text(" Hard ")
+                                    Text("  Hard  ")
                                         .font(MysteryInCasablancaFont.regular.font(with: 20))
                                         .foregroundColor(goldColor)
                                 }
