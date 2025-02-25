@@ -6,7 +6,6 @@ struct ChooseLevelView: View {
     @State private var presentMysteryInCasablanca = false
     @State var isCreate = true
     @State var currentLevel = "easy"
-    
     var body: some View {
         NavigationView {
             ZStack {
