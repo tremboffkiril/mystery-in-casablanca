@@ -90,14 +90,17 @@ struct MysteryInCasablancaPlay: View {
         }
         .onAppear {
             if mystery.first?.level == "easy" {
+                mysteryQuiz = casablancaQuiz
                 mysteryInCasablancaDesiredDurationDate = Calendar.current.date(byAdding: .second,
                                                                 value: 180,
                                                                 to: Date())!
             } else if mystery.first?.level == "medium" {
+                mysteryQuiz = casablancaMediumQuiz
                 mysteryInCasablancaDesiredDurationDate = Calendar.current.date(byAdding: .second,
                                                                 value: 90,
                                                                 to: Date())!
             } else if mystery.first?.level == "hard" {
+                mysteryQuiz = casablancaHardQuiz
                 mysteryInCasablancaDesiredDurationDate = Calendar.current.date(byAdding: .second,
                                                                 value: 60,
                                                                 to: Date())!
